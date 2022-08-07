@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PasswordVaultApp_MVVM_Compose</string>
+    <string name="title_activity_logged_in">LoggedInActivity</string>
 </resources>
