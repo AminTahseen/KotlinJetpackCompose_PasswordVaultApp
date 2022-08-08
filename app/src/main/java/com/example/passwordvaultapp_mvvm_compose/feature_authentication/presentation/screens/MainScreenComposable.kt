@@ -1,28 +1,24 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Lock
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
-import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 

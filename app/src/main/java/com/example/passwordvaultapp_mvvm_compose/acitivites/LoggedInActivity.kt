@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose
+package com.example.passwordvaultapp_mvvm_compose.acitivites
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.passwordvaultapp_mvvm_compose.common.utils.BottomNavItem
-import com.example.passwordvaultapp_mvvm_compose.common.utils.BottomNavigation
+import com.example.passwordvaultapp_mvvm_compose.common.navigation.BottomNavigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Lock
@@ -19,10 +19,8 @@ import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp

@@ -1,9 +1,10 @@
-package com.example.passwordvaultapp_mvvm_compose.common.utils
+package com.example.passwordvaultapp_mvvm_compose.common.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.*
 
 @Composable
@@ -19,7 +20,7 @@ fun BottomNavigation(navController:NavHostController){
             SettingsScreen(navController = navController)
         }
         composable(route = Screen.ToolsScreen.route){
-            ToolsScreen(navController = navController)
+            ToolsScreen()
         }
     }
 }

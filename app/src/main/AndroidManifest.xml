@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.passwordvaultapp_mvvm_compose">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PasswordVaultApp"
         android:allowBackup="true"
@@ -11,12 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">
         <activity
-            android:name=".LoggedInActivity"
+            android:name=".acitivites.VaultCategoryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_vault_category"
+            android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
+        <activity
+            android:name=".acitivites.LoggedInActivity"
             android:exported="false"
             android:label="@string/title_activity_logged_in"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".MainActivity"
+            android:name=".acitivites.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">

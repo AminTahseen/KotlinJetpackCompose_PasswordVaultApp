@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels
+package com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -6,18 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import com.example.passwordvaultapp_mvvm_compose.common.utils.PrefManager
-import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
-import kotlinx.coroutines.launch
-
 class PassCodeViewModel(application: Application) : AndroidViewModel(application) {
     var passCodeValue by mutableStateOf("")
     private var prefs = PrefManager(application.applicationContext)
 
-    fun storePassCode(value:String){
+    private fun storePassCode(value:String){
         prefs.passCodeValue=value
     }
 
-    fun getStoredPassCode():String{
+    private fun getStoredPassCode():String{
         return prefs?.passCodeValue
     }
     fun verifyPassCode():Boolean{

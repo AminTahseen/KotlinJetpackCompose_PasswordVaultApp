@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
+package com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.screens
 
 import android.content.Context
 import android.content.Intent
@@ -19,9 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.passwordvaultapp_mvvm_compose.LoggedInActivity
-import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.PassCodeViewModel
+import com.example.passwordvaultapp_mvvm_compose.acitivites.LoggedInActivity
+import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.greenTextColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
@@ -173,7 +172,7 @@ fun passCodeKeyboard(
                     if (passCodeViewModel.passCodeValue.length == maxLength) {
                         when{
                             passCodeViewModel.verifyPassCode()->{
-                                val loggedInIntent=Intent(context,LoggedInActivity::class.java)
+                                val loggedInIntent=Intent(context, LoggedInActivity::class.java)
                                 context.startActivity(loggedInIntent)
                             }
                             else->{
