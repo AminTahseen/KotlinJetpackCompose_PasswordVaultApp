@@ -31,7 +31,6 @@ fun AddNewVaultCategoryScreen(
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     var categoryName by remember { mutableStateOf(TextFieldValue("")) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-
     val categoryTypeOptions=
         listOf(
         "Bank Account",
@@ -58,6 +57,7 @@ fun AddNewVaultCategoryScreen(
                 .background(appBgColor)
                 .fillMaxWidth()
                 .fillMaxHeight(),) {
+
 
             Text(
                 text = "New Category",
@@ -139,26 +139,30 @@ fun AddNewVaultCategoryScreen(
             }
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
-                if(categoryName.text.isBlank()){
-                    coroutineScope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(
-                            message = "Category Name cannot be empty !",
-                        )
-                    }
-                }else {
-                    vaultViewModel.addVaultCategory(
-                        VaultCategory(
-                            categoryName = categoryName.text,
-                            categoryType = selectedOption,
-                            isVisible = false
-                        )
+                vaultViewModel.addVaultCategory(
+                    VaultCategory(
+                        categoryName = categoryName.text,
+                        categoryType = selectedOption,
+                        isVisible = true
                     )
-                }
+                )
             }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)) {
                 Text(text = "Create".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
             }
+            when{
+                vaultViewModel.isMessageVisible.value->
+                    LaunchedEffect(key1 = Unit) {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = vaultViewModel.message.value.toString()
+                            )
+                        }
+                        vaultViewModel.isMessageVisible.value=false
+                    }
+            }
+
         }
     }
 }

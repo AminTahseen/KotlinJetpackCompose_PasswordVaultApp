@@ -6,9 +6,17 @@ import java.lang.Exception
 
 @Entity
 data class VaultCategory(
-    val categoryName:String,
-    val categoryType:String,
-    val isVisible:Boolean,
+    val categoryName:String="",
+    val categoryType:String="",
+    val isVisible:Boolean=true,
     @PrimaryKey val id:Int?=null
 )
-class InvalidCategoryException(message:String): Exception(message)
+
+fun VaultCategory.toVaultCategoryDisplay():VaultCategoryDisplay{
+    return VaultCategoryDisplay(
+      categoryName = categoryName,
+      categoryType = categoryType,
+      isVisible = isVisible,
+      id=id
+    )
+}

@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.passwordvaultapp_mvvm_compose.acitivites.VaultActivity
 import com.example.passwordvaultapp_mvvm_compose.acitivites.VaultCategoryActivity
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
@@ -81,7 +82,8 @@ fun ToolsScreen(){
                       .fillMaxWidth()
                       .padding(end=20.dp, start = 20.dp)
                       .clickable{
-
+                          val vaultActivity= Intent(context, VaultActivity::class.java)
+                          context.startActivity(vaultActivity)
                       },
                   backgroundColor = textFieldColor
               ) {

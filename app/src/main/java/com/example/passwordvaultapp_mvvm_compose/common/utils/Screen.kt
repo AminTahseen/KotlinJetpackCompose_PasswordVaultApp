@@ -12,7 +12,11 @@ sealed class Screen(val route:String){
     object ToolsScreen:Screen("tools_screen")
 
     // Vault categories navigation
-    object VaultCategoriesScreen:Screen("vault_categories")
-    object AddNewVaultCategoryScreen:Screen("add_vault_category")
+    object VaultCategoriesScreen:Screen("vault_categories_screen")
+    object AddNewVaultCategoryScreen:Screen("add_vault_category_screen")
+
+    // Vaults navigation
+    object AddVaultScreen:Screen("add_vault_screen")
+    object GenerateVaultPassScreen:Screen("generate_pass_screen")
 
 }

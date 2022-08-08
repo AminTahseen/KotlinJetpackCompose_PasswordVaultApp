@@ -3,6 +3,7 @@
     package="com.example.passwordvaultapp_mvvm_compose">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".PasswordVaultApp"
@@ -12,6 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">
+        <activity
+            android:name=".acitivites.VaultActivity"
+            android:exported="false"
+            android:label="@string/title_activity_vault"
+            android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
             android:name=".acitivites.VaultCategoryActivity"
             android:exported="false"

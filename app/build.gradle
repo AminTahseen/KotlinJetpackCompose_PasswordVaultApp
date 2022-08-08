@@ -87,9 +87,11 @@ dependencies {
     //Coil image url loader
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
-
     //Compose dependency
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+
+    //Password generator dependency
+    implementation 'com.github.abhinav0612:PasswordGeneratorLibrary:1.0'
 
 
     testImplementation 'junit:junit:4.13.2'

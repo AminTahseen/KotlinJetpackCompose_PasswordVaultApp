@@ -23,6 +23,7 @@ import com.example.passwordvaultapp_mvvm_compose.acitivites.LoggedInActivity
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.greenTextColor
+import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
