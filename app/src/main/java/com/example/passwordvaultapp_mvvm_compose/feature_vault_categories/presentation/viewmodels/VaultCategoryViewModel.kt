@@ -19,7 +19,7 @@ class VaultCategoryViewModel @Inject constructor(
 
     val message by lazy { MutableLiveData<String>() }
 
-    val hasLoaded by lazy { MutableLiveData<Boolean>() }
+    private val hasLoaded by lazy { MutableLiveData<Boolean>() }
 
     val isMessageVisible =  mutableStateOf(false)
 

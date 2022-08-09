@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -23,10 +24,18 @@ fun PasswordListItemCompose(data:PasswordData){
         .fillMaxWidth()
         .padding(top = 10.dp)
         .background(textFieldColor)) {
+        var imageUri=Uri.parse(data.logoURL)
+        if (imageUri.toString().substring(0, 21) == "content://com.android") {
+            val photoSplit: List<String> = imageUri.toString().split("%3A")
+            val imageUriBasePath = "content://media/external/images/media/" + photoSplit[1]
+            imageUri = Uri.parse(imageUriBasePath)
+        }
         Image(
-            painter = rememberAsyncImagePainter(data.logoURL),
+            rememberAsyncImagePainter(imageUri),
             contentDescription = null,
-            modifier = Modifier.size(55.dp).padding(10.dp),
+            modifier = Modifier
+                .size(55.dp)
+                .padding(10.dp),
             contentScale = ContentScale.Fit,
         )
         Text(text = data.storeFor, modifier = Modifier.padding(20.dp), color = Color.White, fontWeight = FontWeight.Bold)

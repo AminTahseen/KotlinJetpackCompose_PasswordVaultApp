@@ -196,16 +196,6 @@ fun GenerateVaultPassScreen(
                 .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)) {
                 Text(text = "Generate Password".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
             }
-            Button(onClick = {
-            }, modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-                border = BorderStroke(3.dp, Purple500),
-                colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
-
-            ) {
-                Text(text = "Select Password".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
-            }
             Spacer(modifier = Modifier.height(20.dp))
 
         }
