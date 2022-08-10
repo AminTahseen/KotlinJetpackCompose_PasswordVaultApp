@@ -3,4 +3,6 @@
     <string name="title_activity_logged_in">LoggedInActivity</string>
     <string name="title_activity_vault_category">VaultCategoryActivity</string>
     <string name="title_activity_vault">VaultActivity</string>
+    <string name="title_activity_vault_details">VaultDetailsActivity</string>
+
 </resources>

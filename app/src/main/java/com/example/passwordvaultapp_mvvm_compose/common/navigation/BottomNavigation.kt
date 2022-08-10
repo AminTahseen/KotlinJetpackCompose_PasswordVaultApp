@@ -5,7 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.*
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.PasswordListScreen
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.ProfileScreen
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.SettingsScreen
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.ToolsScreen
 
 @Composable
 fun BottomNavigation(navController:NavHostController){
@@ -22,5 +25,6 @@ fun BottomNavigation(navController:NavHostController){
         composable(route = Screen.ToolsScreen.route){
             ToolsScreen()
         }
+
     }
 }

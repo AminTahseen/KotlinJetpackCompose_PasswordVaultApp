@@ -98,7 +98,7 @@ fun PasswordListScreen(
                                 true ->
                                     PasswordListCompose(
                                         startCharacter = it,
-                                        passwordList = list
+                                        passwordList = list,
                                     )
                             }
                         }

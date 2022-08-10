@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">
         <activity
+            android:name=".acitivites.VaultDetailsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_vault_details"
+            android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
+        <activity
             android:name=".acitivites.VaultActivity"
             android:exported="false"
             android:label="@string/title_activity_vault"
@@ -34,7 +39,6 @@
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

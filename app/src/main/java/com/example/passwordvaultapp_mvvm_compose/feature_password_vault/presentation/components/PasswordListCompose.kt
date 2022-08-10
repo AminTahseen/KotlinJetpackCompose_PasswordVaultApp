@@ -14,7 +14,10 @@ import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.m
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 
 @Composable
-fun PasswordListCompose(startCharacter:String,passwordList: List<VaultPassword>){
+fun PasswordListCompose(
+    startCharacter: String,
+    passwordList: List<VaultPassword>,
+){
     Log.d("listV",passwordList.toString())
     Column(
         modifier = Modifier.fillMaxWidth()

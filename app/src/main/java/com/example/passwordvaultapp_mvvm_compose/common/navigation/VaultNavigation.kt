@@ -7,8 +7,6 @@ import androidx.navigation.compose.composable
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.AddPasswordVaultScreen
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.GenerateVaultPassScreen
-import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.presentation.screens.AddNewVaultCategoryScreen
-import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.presentation.screens.VaultCategoriesScreen
 
 @Composable
 fun VaultNavigation(navController: NavHostController,startRoute:String){
@@ -19,5 +17,6 @@ fun VaultNavigation(navController: NavHostController,startRoute:String){
         composable(route = Screen.GenerateVaultPassScreen.route){
            GenerateVaultPassScreen(navController = navController)
         }
+
     }
 }

@@ -18,5 +18,6 @@ sealed class Screen(val route:String){
     // Vaults navigation
     object AddVaultScreen:Screen("add_vault_screen")
     object GenerateVaultPassScreen:Screen("generate_pass_screen")
+    object VaultDetailsScreen:Screen("vault_details_screen")
 
 }
