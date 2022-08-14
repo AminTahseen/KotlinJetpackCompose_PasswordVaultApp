@@ -15,7 +15,7 @@ fun VaultNavigation(navController: NavHostController,startRoute:String){
             AddPasswordVaultScreen(navController = navController)
         }
         composable(route = Screen.GenerateVaultPassScreen.route){
-           GenerateVaultPassScreen(navController = navController)
+           GenerateVaultPassScreen()
         }
 
     }

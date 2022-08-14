@@ -7,6 +7,7 @@ import com.example.passwordvaultapp_mvvm_compose.common.data_source.SecureVaultD
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.data.repository.VaultPasswordRepositoryImpl
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.repository.VaultPasswordRepository
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.AddVaultUseCase
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.GetVaultByIdUseCase
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.GetVaultsUseCase
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.VaultUseCases
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.data.repository.VaultCategoryRepositoryImpl
@@ -62,7 +63,8 @@ object AppModule {
     fun provideVaultUseCases(repository: VaultPasswordRepository):VaultUseCases{
         return VaultUseCases(
             addVaultUseCase = AddVaultUseCase(repository),
-            getVaultsUseCase = GetVaultsUseCase(repository)
+            getVaultsUseCase = GetVaultsUseCase(repository),
+            getVaultByIdUseCase = GetVaultByIdUseCase(repository)
         )
     }
 }

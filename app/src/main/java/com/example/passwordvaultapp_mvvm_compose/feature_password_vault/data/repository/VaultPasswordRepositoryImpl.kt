@@ -13,4 +13,9 @@ class VaultPasswordRepositoryImpl(private val vaultPasswordDao: VaultPasswordDao
     override suspend fun addNewVaultPassword(vaultPassword: VaultPassword) {
         vaultPasswordDao.addNewVaultPassword(vaultPassword)
     }
+
+    override fun getVaultById(id: Int): Flow<VaultPassword> {
+        return vaultPasswordDao.getVaultById(id = id)
+    }
+
 }

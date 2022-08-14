@@ -15,4 +15,7 @@ interface VaultPasswordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNewVaultPassword(vaultPassword: VaultPassword)
+
+    @Query("SELECT * FROM VaultPassword WHERE id=:id")
+    fun getVaultById(id:Int):Flow<VaultPassword>
 }

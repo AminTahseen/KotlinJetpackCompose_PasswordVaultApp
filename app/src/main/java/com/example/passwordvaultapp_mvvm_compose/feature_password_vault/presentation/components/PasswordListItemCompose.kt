@@ -31,6 +31,7 @@ fun PasswordListItemCompose(data: PasswordData){
         .background(textFieldColor)
         .clickable {
             val vaultDetails= Intent(context, VaultDetailsActivity::class.java)
+            vaultDetails.putExtra("vaultId",data.id)
             context.startActivity(vaultDetails)
         }
     ) {

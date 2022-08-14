@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +24,9 @@ class VaultViewModel @Inject constructor(
     val vaults: LiveData<List<VaultPassword>> get() = _vaults
     private val hasLoaded by lazy { MutableLiveData<Boolean>() }
 
+    private val _selectedVault:MutableLiveData<VaultPassword> = MutableLiveData()
+    val selectedVault:MutableLiveData<VaultPassword> get() = _selectedVault
+
     init {
         viewModelScope.launch {
             getAllVaults()
@@ -36,7 +40,7 @@ class VaultViewModel @Inject constructor(
         includeSymbols: Boolean = false,
     ): String {
         return try {
-            var passwordGenerator = PasswordGenerator(
+            val passwordGenerator = PasswordGenerator(
                 length = length,
                 includeUpperCaseLetters = includeUpperCase,
                 includeLowerCaseLetters = includeLowerCase,
@@ -91,6 +95,14 @@ class VaultViewModel @Inject constructor(
                 _vaults.value=it
             }
             hasLoaded.value=true
+        }
+    }
+    fun getVaultById(id:Int){
+        viewModelScope.launch {
+            vaultUseCases.getVaultByIdUseCase(id).collect{
+                Log.d("vaultDetails",it.toString())
+                _selectedVault.value=it
+            }
         }
     }
 }

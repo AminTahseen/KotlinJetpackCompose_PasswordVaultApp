@@ -15,11 +15,13 @@ class VaultDetailsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PasswordVaultApp_MVVM_ComposeTheme {
+                val vaultId=intent.extras?.get("vaultId")
                 val navController= rememberNavController()
                 // A surface container using the 'background' color from the theme
                 VaultDetailsNavigation(
                     navController = navController,
-                    startRoute = Screen.VaultDetailsScreen.route
+                    startRoute = Screen.VaultDetailsScreen.route,
+                    id = vaultId as Int
                 )
             }
         }
