@@ -6,10 +6,7 @@ import com.example.passwordvaultapp_mvvm_compose.common.Constants
 import com.example.passwordvaultapp_mvvm_compose.common.data_source.SecureVaultDatabase
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.data.repository.VaultPasswordRepositoryImpl
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.repository.VaultPasswordRepository
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.AddVaultUseCase
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.GetVaultByIdUseCase
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.GetVaultsUseCase
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.VaultUseCases
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.*
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.data.repository.VaultCategoryRepositoryImpl
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.repository.VaultCategoryRepository
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.AddVaultCategoryUseCase
@@ -64,7 +61,8 @@ object AppModule {
         return VaultUseCases(
             addVaultUseCase = AddVaultUseCase(repository),
             getVaultsUseCase = GetVaultsUseCase(repository),
-            getVaultByIdUseCase = GetVaultByIdUseCase(repository)
+            getVaultByIdUseCase = GetVaultByIdUseCase(repository),
+            deleteVaultUseCase = DeleteVaultUseCase(repository)
         )
     }
 }

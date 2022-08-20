@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
+import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -52,6 +54,8 @@ fun ViewVaultDetailsScreen(
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     var dialogState by remember {mutableStateOf(false)}
     var deleteDialogState by remember {mutableStateOf(false)}
+    val activity = (LocalContext.current as? Activity)
+
     fun onShowPassword(
         status:Boolean
     ) {
@@ -240,12 +244,12 @@ fun ViewVaultDetailsScreen(
                 onDismissRequest ={ deleteDialogState=!it },
                 forDelete = true,
                 yesButtonAction = {
-                    deleteDialogState=!it
-                    coroutineScope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(
-                            message = "Vault Successfully Deleted"
-                        )
+                    if (dataValue != null) {
+                            vaultViewModel.deleteVault(dataValue)
+                            deleteDialogState=!it
                     }
+                    activity?.finish()
+
                 }
             )
         }

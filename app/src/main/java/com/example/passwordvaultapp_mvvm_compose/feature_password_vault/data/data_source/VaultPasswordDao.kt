@@ -1,9 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.data.data_source
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.VaultPassword
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +15,7 @@ interface VaultPasswordDao {
 
     @Query("SELECT * FROM VaultPassword WHERE id=:id")
     fun getVaultById(id:Int):Flow<VaultPassword>
+
+    @Delete
+    fun deleteVault(vaultPassword:VaultPassword)
 }

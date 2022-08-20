@@ -10,4 +10,6 @@ interface VaultPasswordRepository {
     suspend fun addNewVaultPassword(vaultPassword: VaultPassword)
 
     fun getVaultById(id:Int):Flow<VaultPassword>
+
+    suspend fun deleteVaultPassword(vaultPassword: VaultPassword)
 }

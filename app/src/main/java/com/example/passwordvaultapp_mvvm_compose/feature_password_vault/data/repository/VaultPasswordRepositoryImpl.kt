@@ -18,4 +18,8 @@ class VaultPasswordRepositoryImpl(private val vaultPasswordDao: VaultPasswordDao
         return vaultPasswordDao.getVaultById(id = id)
     }
 
+    override suspend fun deleteVaultPassword(vaultPassword: VaultPassword) {
+        vaultPasswordDao.deleteVault(vaultPassword)
+    }
+
 }

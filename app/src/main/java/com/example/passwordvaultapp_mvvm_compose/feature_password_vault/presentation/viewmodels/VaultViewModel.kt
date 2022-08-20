@@ -1,7 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels
 
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +10,8 @@ import com.abhinav.passwordgenerator.PasswordGenerator
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.VaultPassword
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.VaultUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -92,6 +93,13 @@ class VaultViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteVault(vaultPassword: VaultPassword){
+        CoroutineScope(Dispatchers.IO).launch {
+            vaultUseCases.deleteVaultUseCase(vaultPassword)
+        }
+    }
+
     private suspend fun getAllVaults(){
         hasLoaded.value=false
         viewModelScope.launch {
@@ -104,7 +112,6 @@ class VaultViewModel @Inject constructor(
     fun getVaultById(id:Int){
         viewModelScope.launch {
             vaultUseCases.getVaultByIdUseCase(id).collect{
-                Log.d("vaultDetails",it.toString())
                 _selectedVault.value=it
             }
         }
