@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.PassCodeDialog
+import com.example.passwordvaultapp_mvvm_compose.common.components.YesNoDialog
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.VaultViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
@@ -50,7 +51,7 @@ fun ViewVaultDetailsScreen(
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     var dialogState by remember {mutableStateOf(false)}
-
+    var deleteDialogState by remember {mutableStateOf(false)}
     fun onShowPassword(
         status:Boolean
     ) {
@@ -214,7 +215,7 @@ fun ViewVaultDetailsScreen(
                     )
                 }
                 Button(onClick = {
-
+                    deleteDialogState=true
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {
@@ -225,11 +226,27 @@ fun ViewVaultDetailsScreen(
                     )
                 }
             }
-
             PassCodeDialog(
                 dialogState = dialogState,
                 onDismissRequest = { dialogState=!it },
                 onShowPassword =::onShowPassword
+            )
+            YesNoDialog(
+                dialogState = deleteDialogState,
+                dialogTitle = "Delete Vault ?",
+                dialogSubtitle = "Are you sure you want to delete this vault ?",
+                dialogButtonYesText = "Delete",
+                dialogButtonNoText = "Cancel",
+                onDismissRequest ={ deleteDialogState=!it },
+                forDelete = true,
+                yesButtonAction = {
+                    deleteDialogState=!it
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = "Vault Successfully Deleted"
+                        )
+                    }
+                }
             )
         }
     }

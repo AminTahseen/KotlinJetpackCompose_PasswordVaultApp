@@ -30,7 +30,6 @@ fun PassCodeDialog(
     onShowPassword: (Boolean) -> Unit
 ){
     val maxLength=5
-
     when{
         dialogState->{
             AlertDialog(onDismissRequest = {
