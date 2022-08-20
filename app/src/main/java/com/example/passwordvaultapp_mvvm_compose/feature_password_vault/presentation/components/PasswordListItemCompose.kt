@@ -17,13 +17,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.passwordvaultapp_mvvm_compose.acitivites.VaultDetailsActivity
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.PasswordData
+import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.VaultViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
 
 @Composable
-fun PasswordListItemCompose(data: PasswordData){
+fun PasswordListItemCompose(
+    data: PasswordData,
+    vaultViewModel: VaultViewModel = hiltViewModel()
+){
     val context= LocalContext.current
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -36,13 +41,9 @@ fun PasswordListItemCompose(data: PasswordData){
         }
     ) {
         var imageUri=Uri.parse(data.logoURL)
-        if (imageUri.toString().substring(0, 21) == "content://com.android") {
-            val photoSplit: List<String> = imageUri.toString().split("%3A")
-            val imageUriBasePath = "content://media/external/images/media/" + photoSplit[1]
-            imageUri = Uri.parse(imageUriBasePath)
-        }
+        var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
         Image(
-            rememberAsyncImagePainter(imageUri),
+            rememberAsyncImagePainter(imageUriFormed),
             contentDescription = null,
             modifier = Modifier
                 .size(55.dp)

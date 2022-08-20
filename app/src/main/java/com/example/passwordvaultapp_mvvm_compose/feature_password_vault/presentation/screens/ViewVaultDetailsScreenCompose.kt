@@ -1,6 +1,8 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
+import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,8 +10,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
@@ -24,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.PassCodeDialog
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.VaultViewModel
@@ -80,8 +85,22 @@ fun ViewVaultDetailsScreen(
                 .background(appBgColor)
                 .fillMaxWidth()
                 .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
+
+            Spacer(modifier = Modifier.height(50.dp))
             if (dataValue != null) {
+                var imageUri= Uri.parse(dataValue.vaultLogoURL)
+                var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
+                Image(
+                    rememberAsyncImagePainter(imageUriFormed),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(10.dp),
+                    contentScale = ContentScale.Fit,
+                )
                 Text(
                     text = dataValue.vaultName,
                     color = Color.White,
@@ -89,9 +108,7 @@ fun ViewVaultDetailsScreen(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold
                 )
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-            if (dataValue != null) {
+                Spacer(modifier = Modifier.height(10.dp))
                 TextField(
                     value = TextFieldValue(dataValue.vaultPassword),
                     modifier = Modifier
@@ -160,6 +177,55 @@ fun ViewVaultDetailsScreen(
                     modifier = Modifier.padding(10.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            if(dataValue!=null){
+                Icon(
+                    painter = painterResource(id = R.drawable.category),
+                    contentDescription ="",modifier = Modifier
+                        .size(55.dp)
+                        .padding(top = 20.dp),
+                    tint = Color.White
+                )
+                Text(
+                    text = dataValue.vaultCategory.uppercase(),
+                    color = Color.White,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                modifier = Modifier
+                    .padding(end = 10.dp, start = 10.dp, top = 30.dp)
+                    .fillMaxWidth()
+                ,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(onClick = {
+
+                },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.edit),
+                        contentDescription ="Edit",
+                        tint = Color.White
+                    )
+                }
+                Button(onClick = {
+
+                },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete),
+                        contentDescription ="Delete",
+                        tint = Color.White
+                    )
+                }
+            }
+
             PassCodeDialog(
                 dialogState = dialogState,
                 onDismissRequest = { dialogState=!it },

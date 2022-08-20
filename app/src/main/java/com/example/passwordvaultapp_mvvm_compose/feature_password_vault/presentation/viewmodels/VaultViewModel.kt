@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -26,6 +27,9 @@ class VaultViewModel @Inject constructor(
 
     private val _selectedVault:MutableLiveData<VaultPassword> = MutableLiveData()
     val selectedVault:MutableLiveData<VaultPassword> get() = _selectedVault
+
+    val isSearchFilterApply =  mutableStateOf(false)
+
 
     init {
         viewModelScope.launch {
@@ -104,5 +108,13 @@ class VaultViewModel @Inject constructor(
                 _selectedVault.value=it
             }
         }
+    }
+    fun getVaultImageFromLocal(imageUri:Uri):Uri{
+        if (imageUri.toString().substring(0, 21) == "content://com.android") {
+            val photoSplit: List<String> = imageUri.toString().split("%3A")
+            val imageUriBasePath = "content://media/external/images/media/" + photoSplit[1]
+            return Uri.parse(imageUriBasePath)
+        }
+        return imageUri
     }
 }

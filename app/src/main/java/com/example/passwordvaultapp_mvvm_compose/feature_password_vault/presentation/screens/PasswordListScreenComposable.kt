@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,6 +37,8 @@ fun PasswordListScreen(
         "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w",
         "x", "y", "z"
     )
+    val data = vaultViewModel.vaults.observeAsState()
+    var searchedList= emptyList<VaultPassword>()
     Scaffold(scaffoldState = scaffoldState) {
         Column(
             modifier = Modifier
@@ -60,6 +63,25 @@ fun PasswordListScreen(
                     .background(textFieldColor),
                 onValueChange = {
                     text = it
+                    if(searchedList.isNotEmpty())
+                        searchedList= emptyList()
+
+                    vaultViewModel.isSearchFilterApply.value=true
+                    if(!it.text.isNullOrBlank()){
+                        Log.d("searchedInside","if")
+                        data.value?.let { listVaults: List<VaultPassword> ->
+                            val list = listVaults.filter { s ->
+                                s.vaultName.uppercase().startsWith(it.text.uppercase())
+                            }
+                            when (list.isNotEmpty()) {
+                                true->
+                                    searchedList=list
+                            }
+                        }
+                    }else{
+                        Log.d("searchedInside","else")
+                        searchedList= emptyList()
+                    }
                 },
                 textStyle = TextStyle(
                     fontSize = 20.sp,
@@ -82,26 +104,58 @@ fun PasswordListScreen(
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))
-            val data = vaultViewModel.vaults.observeAsState()
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(450.dp)
             ) {
                 item {
-                    alphabetsList.iterator().forEach {
-                        data.value?.let { listVaults: List<VaultPassword> ->
-                            val list = listVaults.filter { s ->
-                                s.vaultName.uppercase().startsWith(it.uppercase())
+                    Log.d("searchedInside",searchedList.size.toString())
+                    Log.d("searchedInside Bool",vaultViewModel.isSearchFilterApply.value.toString())
+                    when{
+                        vaultViewModel.isSearchFilterApply.value->
+                            when{
+                                searchedList.isNotEmpty() ->
+                                    searchedList.iterator().forEach {
+                                        when (searchedList.isNotEmpty()) {
+                                            true ->
+                                                PasswordListCompose(
+                                                    startCharacter = it.vaultName[0].toString(),
+                                                    passwordList = searchedList,
+                                                )
+                                        }
+                                    }
+                                else->
+                                    alphabetsList.iterator().forEach {
+                                        data.value?.let { listVaults: List<VaultPassword> ->
+                                            val list = listVaults.filter { s ->
+                                                s.vaultName.uppercase().startsWith(it.uppercase())
+                                            }
+                                            when (list.isNotEmpty()) {
+                                                true ->
+                                                    PasswordListCompose(
+                                                        startCharacter = it,
+                                                        passwordList = list,
+                                                    )
+                                            }
+                                        }
+                                    }
                             }
-                            when (list.isNotEmpty()) {
-                                true ->
-                                    PasswordListCompose(
-                                        startCharacter = it,
-                                        passwordList = list,
-                                    )
+                        else->
+                            alphabetsList.iterator().forEach {
+                                data.value?.let { listVaults: List<VaultPassword> ->
+                                    val list = listVaults.filter { s ->
+                                        s.vaultName.uppercase().startsWith(it.uppercase())
+                                    }
+                                    when (list.isNotEmpty()) {
+                                        true ->
+                                            PasswordListCompose(
+                                                startCharacter = it,
+                                                passwordList = list,
+                                            )
+                                    }
+                                }
                             }
-                        }
                     }
                 }
             }
