@@ -2,6 +2,7 @@ package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.present
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,6 +43,7 @@ fun PasswordListItemCompose(
     ) {
         var imageUri=Uri.parse(data.logoURL)
         var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
+        Log.d("imagURI",imageUriFormed.toString())
         Image(
             rememberAsyncImagePainter(imageUriFormed),
             contentDescription = null,

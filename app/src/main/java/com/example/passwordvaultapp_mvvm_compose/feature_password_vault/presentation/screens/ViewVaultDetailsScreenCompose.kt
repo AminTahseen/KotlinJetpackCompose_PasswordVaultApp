@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.PassCodeDialog
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ViewVaultDetailsScreen(
     id:Int,
+    navController: NavHostController,
     vaultViewModel: VaultViewModel = hiltViewModel(),
     ){
     val scaffoldState: ScaffoldState = rememberScaffoldState()
@@ -203,12 +205,11 @@ fun ViewVaultDetailsScreen(
             Row(
                 modifier = Modifier
                     .padding(end = 10.dp, start = 10.dp, top = 30.dp)
-                    .fillMaxWidth()
-                ,
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(onClick = {
-
+                    navController.navigate("edit_vault_screen?"+"vaultId=${dataValue?.id}")
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {

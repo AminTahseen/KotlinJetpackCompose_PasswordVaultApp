@@ -31,7 +31,7 @@ import com.example.passwordvaultapp_mvvm_compose.ui.theme.greenButtonColor
 fun VaultCategoryList(
     selectedIndex:Int,
     vaultCategoryViewModel: VaultCategoryViewModel = hiltViewModel(),
-    onCategorySelected: (String,Int?,Int) -> Unit
+    onCategorySelected: (String,Int?,Int) -> Unit,
 ){
 
     Row(
@@ -42,6 +42,7 @@ fun VaultCategoryList(
     ) {
         val data= vaultCategoryViewModel.categories.observeAsState()
         Log.d("categoryList",data.value?.size.toString())
+        Log.d("categoryListIndex",selectedIndex.toString())
         data.value?.let { it1 ->
             when{
                 it1.toList().isNotEmpty() ->

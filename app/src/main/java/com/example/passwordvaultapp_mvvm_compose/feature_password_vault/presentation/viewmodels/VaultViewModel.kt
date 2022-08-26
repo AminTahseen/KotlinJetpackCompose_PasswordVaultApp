@@ -1,6 +1,7 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.abhinav.passwordgenerator.PasswordGenerator
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.VaultPassword
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.use_cases.VaultUseCases
+import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.models.VaultCategory
+import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.CategoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VaultViewModel @Inject constructor(
-    private val vaultUseCases: VaultUseCases
+    private val vaultUseCases: VaultUseCases,
+    private val categoryUseCases: CategoryUseCases
 ) : ViewModel(){
     val message by lazy { MutableLiveData<String>() }
     val isMessageVisible =  mutableStateOf(false)
@@ -30,11 +34,13 @@ class VaultViewModel @Inject constructor(
     val selectedVault:MutableLiveData<VaultPassword> get() = _selectedVault
 
     val isSearchFilterApply =  mutableStateOf(false)
+    private val _categories: MutableLiveData<List<VaultCategory>> = MutableLiveData()
 
 
     init {
         viewModelScope.launch {
             getAllVaults()
+            getAllVaultCategories()
         }
     }
     fun generatePassword(
@@ -123,5 +129,32 @@ class VaultViewModel @Inject constructor(
             return Uri.parse(imageUriBasePath)
         }
         return imageUri
+    }
+    private suspend fun getAllVaultCategories(){
+        hasLoaded.value=false
+        viewModelScope.launch {
+            categoryUseCases.getCategories().collect{
+                Log.d("category",it.toString())
+                _categories.value=it
+            }
+            hasLoaded.value=true
+        }
+    }
+    fun getSelectedCategoryIndex(categoryId:Int):Int{
+        var index=-1
+        for (i in 0 until _categories.value!!.size)
+        {
+            index = when (_categories.value!![i].id) {
+                categoryId -> {
+                    Log.d("selectedCheck","if")
+                    i
+                    break
+                }else->{
+                    Log.d("selectedCheck","else")
+                    -1
+                }
+            }
+        }
+        return index
     }
 }

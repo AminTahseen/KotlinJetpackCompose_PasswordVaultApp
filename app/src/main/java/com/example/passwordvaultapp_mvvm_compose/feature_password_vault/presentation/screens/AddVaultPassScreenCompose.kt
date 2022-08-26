@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -43,8 +44,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddPasswordVaultScreen(
     navController: NavController,
-    vaultViewModel: VaultViewModel = hiltViewModel()
+    vaultId:Int=-1,
+    vaultViewModel: VaultViewModel = hiltViewModel(),
 ) {
+
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     var vaultName by remember { mutableStateOf(TextFieldValue("")) }
     var vaultPass by remember { mutableStateOf(TextFieldValue("")) }
@@ -84,6 +87,22 @@ fun AddPasswordVaultScreen(
         selectedCategoryID= categoryId.toString()
         selectedCategoryName=categoryName
         Log.d("selected", categoryName)
+    }
+    Log.d("vaultId",vaultId.toString())
+    when{
+        vaultId!=-1->
+            vaultViewModel.getVaultById(vaultId)
+    }
+    val data=vaultViewModel.selectedVault.observeAsState()
+    val dataValue= data?.value
+    if(dataValue!=null){
+        vaultName=TextFieldValue(dataValue.vaultName)
+        vaultPass=TextFieldValue(dataValue.vaultPassword)
+        imageURI=Uri.parse(dataValue.vaultLogoURL)
+        selectedCategoryID=dataValue.vaultCategoryId.toString()
+        selectedCategoryName=dataValue.vaultCategory
+        Log.d("selectedIndex",vaultViewModel.getSelectedCategoryIndex(dataValue.vaultCategoryId).toString())
+        selectedIndex=vaultViewModel.getSelectedCategoryIndex(dataValue.vaultCategoryId)
     }
     Scaffold(scaffoldState = scaffoldState) {
         Column(
