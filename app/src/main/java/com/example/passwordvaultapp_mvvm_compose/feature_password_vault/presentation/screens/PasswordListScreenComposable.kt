@@ -17,7 +17,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.passwordvaultapp_mvvm_compose.common.components.SearchBar
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.VaultPassword
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.components.PasswordListCompose
@@ -26,7 +25,6 @@ import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 
 @Composable
 fun PasswordListScreen(
-    navController: NavController,
     vaultViewModel: VaultViewModel = hiltViewModel()
 ) {
     val scaffoldState: ScaffoldState = rememberScaffoldState()

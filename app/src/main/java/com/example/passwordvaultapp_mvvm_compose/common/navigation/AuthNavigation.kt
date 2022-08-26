@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
-import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.MainScreen
+import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.screens.MainScreen
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.screens.PassCodeScreen
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 
@@ -18,7 +18,7 @@ fun AuthNavigation(passCodeViewModel: PassCodeViewModel){
             MainScreen(navController = navController)
         }
         composable(route = Screen.PasscodeScreen.route){
-            PassCodeScreen(navController = navController,passCodeViewModel)
+            PassCodeScreen(passCodeViewModel)
         }
     }
 }

@@ -1,26 +1,31 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.passwordvaultapp_mvvm_compose.R
+import com.example.passwordvaultapp_mvvm_compose.acitivites.MainActivity
+import com.example.passwordvaultapp_mvvm_compose.common.components.YesNoDialog
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(){
     val scaffoldState: ScaffoldState = rememberScaffoldState()
-
+    val context = LocalContext.current
+    var dialogState by remember { mutableStateOf(false) }
     Scaffold(scaffoldState = scaffoldState) {
         Column(
             modifier = Modifier
@@ -56,6 +61,7 @@ fun ProfileScreen(navController: NavController){
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
+                    dialogState=true
 
                 }, modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +74,20 @@ fun ProfileScreen(navController: NavController){
                     modifier = Modifier.padding(10.dp)
                 )
             }
-
+            YesNoDialog(
+                dialogState = dialogState,
+                dialogTitle = "Logout ?",
+                dialogSubtitle = "Are you sure you want to logout ?",
+                dialogButtonYesText = "Logout",
+                dialogButtonNoText = "Cancel",
+                onDismissRequest ={ dialogState=!it },
+                forDelete =true,
+                yesButtonAction = {
+                    (context as Activity).finish()
+                    val mainIntent=Intent(context,MainActivity::class.java)
+                    context.startActivity(mainIntent)
+                }
+            )
         }
     }
 }

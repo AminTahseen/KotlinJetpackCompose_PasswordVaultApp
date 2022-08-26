@@ -4,5 +4,6 @@
     <string name="title_activity_vault_category">VaultCategoryActivity</string>
     <string name="title_activity_vault">VaultActivity</string>
     <string name="title_activity_vault_details">VaultDetailsActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>
