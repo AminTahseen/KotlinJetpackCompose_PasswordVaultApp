@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -123,7 +124,13 @@ class VaultViewModel @Inject constructor(
         if (imageUri.toString().substring(0, 21) == "content://com.android") {
             val photoSplit: List<String> = imageUri.toString().split("%3A")
             val imageUriBasePath = "content://media/external/images/media/" + photoSplit[1]
-            return Uri.parse(imageUriBasePath)
+            val file = File(imageUriBasePath)
+            return if (file.exists()) {
+                //Do something
+                Uri.parse(imageUriBasePath)
+            }else{
+                imageUri
+            }
         }
         return imageUri
     }

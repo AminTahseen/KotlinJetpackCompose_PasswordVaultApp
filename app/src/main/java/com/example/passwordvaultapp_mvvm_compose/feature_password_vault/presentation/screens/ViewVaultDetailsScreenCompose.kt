@@ -100,6 +100,7 @@ fun ViewVaultDetailsScreen(
             if (dataValue != null) {
                 var imageUri= Uri.parse(dataValue.vaultLogoURL)
                 var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
+                Log.d("imageURI",imageUriFormed.toString())
                 if (imageUriFormed==imageUri)
                     Image(
                         painter = painterResource(id = R.drawable.lock),

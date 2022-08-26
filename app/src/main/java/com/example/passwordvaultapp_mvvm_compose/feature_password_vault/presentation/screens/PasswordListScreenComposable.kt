@@ -4,26 +4,25 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.passwordvaultapp_mvvm_compose.common.components.SearchBar
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models.VaultPassword
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.components.PasswordListCompose
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.VaultViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
-import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
-import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
 
 @Composable
 fun PasswordListScreen(
@@ -55,53 +54,27 @@ fun PasswordListScreen(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
-            TextField(
-                value = text,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp, end = 10.dp, start = 10.dp)
-                    .background(textFieldColor),
-                onValueChange = {
-                    text = it
-                    if(searchedList.isNotEmpty())
-                        searchedList= emptyList()
-
-                    vaultViewModel.isSearchFilterApply.value=true
-                    if(!it.text.isNullOrBlank()){
-                        Log.d("searchedInside","if")
-                        data.value?.let { listVaults: List<VaultPassword> ->
-                            val list = listVaults.filter { s ->
-                                s.vaultName.uppercase().startsWith(it.text.uppercase())
-                            }
-                            when (list.isNotEmpty()) {
-                                true->
-                                    searchedList=list
-                            }
+            SearchBar(text = text, onValueChange = {
+                text = it
+                if(searchedList.isNotEmpty())
+                    searchedList= emptyList()
+                vaultViewModel.isSearchFilterApply.value=true
+                if(!it.text.isNullOrBlank()){
+                    Log.d("searchedInside","if")
+                    data.value?.let { listVaults: List<VaultPassword> ->
+                        val list = listVaults.filter { s ->
+                            s.vaultName.uppercase().startsWith(it.text.uppercase())
                         }
-                    }else{
-                        Log.d("searchedInside","else")
-                        searchedList= emptyList()
+                        when (list.isNotEmpty()) {
+                            true->
+                                searchedList=list
+                        }
                     }
-                },
-                textStyle = TextStyle(
-                    fontSize = 20.sp,
-                    color = Color.White
-                ),
-                singleLine = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Search,
-                        contentDescription = "", tint = textColor
-                    )
-                },
-                placeholder = {
-                    Text(
-                        "Search",
-                        color = textColor,
-                        fontSize = 17.sp,
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
+                }else{
+                    Log.d("searchedInside","else")
+                    searchedList= emptyList()
                 }
+            }
             )
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(
