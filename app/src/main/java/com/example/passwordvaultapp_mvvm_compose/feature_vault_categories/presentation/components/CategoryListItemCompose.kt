@@ -2,12 +2,14 @@ package com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.prese
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +26,7 @@ fun CategoryListItemCompose(data: VaultCategoryDisplay){
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(top = 10.dp)
+        .clip(shape = RoundedCornerShape(20.dp))
         .background(textFieldColor),
     horizontalArrangement = Arrangement.SpaceBetween) {
         Row() {
@@ -44,7 +47,9 @@ fun CategoryListItemCompose(data: VaultCategoryDisplay){
                 backgroundColor = appBgColor,
             ),
             modifier = Modifier
-                .padding(top = 20.dp,end=20.dp),
+                .padding(top = 20.dp,end=20.dp)
+                .clip(shape = RoundedCornerShape(20.dp))
+            ,
             ) {
             when{
                 data.isVisible->

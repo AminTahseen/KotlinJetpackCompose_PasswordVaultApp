@@ -229,15 +229,31 @@ fun AddPasswordVaultScreen(
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
-                          vaultViewModel.addNewVault(
-                              VaultPassword(
-                                  vaultName = vaultName.text,
-                                  vaultPassword =vaultPass.text,
-                                  vaultCategory = selectedCategoryName,
-                                  vaultCategoryId = selectedCategoryID.toInt(),
-                                  vaultLogoURL = imageURI.toString()
-                              )
-                          )
+                    when(dataValue){
+                        null->
+                            vaultViewModel.addNewVault(
+                                VaultPassword(
+                                    vaultName = vaultName.text,
+                                    vaultPassword =vaultPass.text,
+                                    vaultCategory = selectedCategoryName,
+                                    vaultCategoryId = selectedCategoryID.toInt(),
+                                    vaultLogoURL = imageURI.toString()
+                                )
+                            )
+                        else->
+                            vaultViewModel.addNewVault(
+                                VaultPassword(
+                                    id=dataValue.id,
+                                    vaultName = vaultName.text,
+                                    vaultPassword =vaultPass.text,
+                                    vaultCategory = selectedCategoryName,
+                                    vaultCategoryId = selectedCategoryID.toInt(),
+                                    vaultLogoURL = imageURI.toString()
+                                )
+                            )
+
+                    }
+
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)

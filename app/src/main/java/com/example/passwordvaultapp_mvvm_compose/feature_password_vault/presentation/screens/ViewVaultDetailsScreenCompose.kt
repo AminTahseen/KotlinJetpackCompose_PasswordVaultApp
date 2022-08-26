@@ -100,14 +100,24 @@ fun ViewVaultDetailsScreen(
             if (dataValue != null) {
                 var imageUri= Uri.parse(dataValue.vaultLogoURL)
                 var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
-                Image(
-                    rememberAsyncImagePainter(imageUriFormed),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .padding(10.dp),
-                    contentScale = ContentScale.Fit,
-                )
+                if (imageUriFormed==imageUri)
+                    Image(
+                        painter = painterResource(id = R.drawable.lock),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(10.dp),
+                        contentScale = ContentScale.Fit,
+                    )
+                else
+                    Image(
+                        rememberAsyncImagePainter(imageUriFormed),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(10.dp),
+                        contentScale = ContentScale.Fit,
+                    )
                 Text(
                     text = dataValue.vaultName,
                     color = Color.White,
@@ -208,8 +218,15 @@ fun ViewVaultDetailsScreen(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = {
-                    navController.navigate("edit_vault_screen?"+"vaultId=${dataValue?.id}")
+                Button(onClick =
+                {
+                    when{
+                        showHidePass->
+                            navController.navigate("edit_vault_screen?" + "vaultId=${dataValue?.id}")
+                        else->
+                            dialogState=true
+                    }
+
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {
@@ -219,8 +236,14 @@ fun ViewVaultDetailsScreen(
                         tint = Color.White
                     )
                 }
-                Button(onClick = {
-                    deleteDialogState=true
+                Button(onClick =
+                {
+                    when{
+                        showHidePass->
+                            deleteDialogState=true
+                    else->
+                        dialogState=true
+                    }
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {

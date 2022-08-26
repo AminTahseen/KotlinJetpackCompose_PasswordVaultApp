@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +54,7 @@ fun ToolsScreen(){
                   modifier = Modifier
                       .fillMaxWidth()
                       .padding(end=20.dp, start = 20.dp, bottom=20.dp)
+                      .clip(shape = RoundedCornerShape(20.dp))
                       .clickable{
                           val vaultCategoryActivity= Intent(context, VaultCategoryActivity::class.java)
                           context.startActivity(vaultCategoryActivity)
@@ -81,6 +84,7 @@ fun ToolsScreen(){
                   modifier = Modifier
                       .fillMaxWidth()
                       .padding(end=20.dp, start = 20.dp)
+                      .clip(shape = RoundedCornerShape(20.dp))
                       .clickable{
                           val vaultActivity= Intent(context, VaultActivity::class.java)
                           context.startActivity(vaultActivity)

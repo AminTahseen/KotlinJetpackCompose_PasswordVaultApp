@@ -65,37 +65,34 @@ class VaultViewModel @Inject constructor(
     }
 
     fun addNewVault(vaultPassword: VaultPassword){
+        isMessageVisible.value=true
         when {
             vaultPassword.vaultName.isNullOrBlank() -> {
-                isMessageVisible.value=true
                 message.value="Vault name cannot be empty !"
             }
             vaultPassword.vaultPassword.isNullOrBlank() -> {
-                isMessageVisible.value=true
                 message.value="Vault password cannot be empty !"
             }
             vaultPassword.vaultPassword.isNullOrBlank() -> {
-                isMessageVisible.value=true
                 message.value="Vault password cannot be empty !"
             }
             vaultPassword.vaultPassword.length<6 -> {
-                isMessageVisible.value=true
                 message.value="Vault password cannot be less than 6 !"
             }
             vaultPassword.vaultLogoURL.isNullOrBlank() -> {
-                isMessageVisible.value=true
                 message.value="Vault logo image cannot be empty !"
             }
             vaultPassword.vaultCategory.isNullOrBlank() && vaultPassword.vaultCategoryId==-1 -> {
-                isMessageVisible.value=true
                 message.value="Select a vault category !"
             }
             else -> {
                 viewModelScope.launch {
                     vaultUseCases.addVaultUseCase(vaultPassword)
                 }
-                isMessageVisible.value=true
-                message.value="New Vault Created"
+                if(vaultPassword.id!=null)
+                    message.value="Vault Updated"
+                else
+                    message.value="New Vault Created"
             }
         }
     }
@@ -143,18 +140,9 @@ class VaultViewModel @Inject constructor(
     fun getSelectedCategoryIndex(categoryId:Int):Int{
         var index=-1
         for (i in 0 until _categories.value!!.size)
-        {
-            index = when (_categories.value!![i].id) {
-                categoryId -> {
-                    Log.d("selectedCheck","if")
-                    i
-                    break
-                }else->{
-                    Log.d("selectedCheck","else")
-                    -1
-                }
-            }
-        }
+            if(_categories.value!![i].id==categoryId)
+                index=i
+
         return index
     }
 }
