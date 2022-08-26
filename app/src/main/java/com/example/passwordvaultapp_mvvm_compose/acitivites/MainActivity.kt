@@ -11,7 +11,7 @@ import com.example.passwordvaultapp_mvvm_compose.ui.theme.PasswordVaultApp_MVVM_
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // development branch created
+        // development-issues-resolution branch created
         setContent {
             PasswordVaultApp_MVVM_ComposeTheme {
                 var passCodeViewModel =
