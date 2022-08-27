@@ -2,10 +2,12 @@ package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.present
 
 import android.app.Activity
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -49,28 +51,20 @@ fun ProfileScreen(
                 .fillMaxHeight(),
         ) {
             ProfileCardComposable()
+            Divider(color = textColor, thickness = 1.dp, modifier =Modifier
+                .padding(start = 20.dp, end = 20.dp))
             Spacer(modifier = Modifier.height(10.dp))
             ProfileOption("My Profile",painterResource(id = R.drawable.profile), action = {
 
             })
+            ProfileOption("Change Pin", painterResource(id = R.drawable.lock), action = {
+            })
             ProfileOption("Clear Data", painterResource(id = R.drawable.delete), action = {
                 dialogStateClear=true
             })
-            Button(
-                onClick = {
-                    dialogState=true
-
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp, top = 10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
-            ) {
-                Text(
-                    text = "Logout".uppercase(),
-                    color = Color.White,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
+            ProfileOption("Logout", painterResource(id = R.drawable.logout), action = {
+                dialogState=true
+            })
             YesNoDialog(
                 dialogState = dialogState,
                 dialogTitle = "Logout ?",
@@ -107,7 +101,7 @@ fun ProfileCardComposable() {
         modifier = Modifier
             .wrapContentSize()
             .clip(RoundedCornerShape(4.dp))
-            .padding(16.dp),
+            .padding(top=30.dp, end = 20.dp, start = 20.dp, bottom = 10.dp),
         backgroundColor = appBgColor,
         elevation = 10.dp
     ) {
@@ -123,12 +117,19 @@ fun ProfileCardComposable() {
 }
 @Composable
 fun ProfilePictureComposable() {
-    Image(
-        painter = painterResource(id = R.drawable.profile),
-        contentScale = ContentScale.Crop,
+    Card(
+        shape = CircleShape,
+        border = BorderStroke(1.dp, color = Color.Green),
         modifier = Modifier.size(50.dp),
-        contentDescription = "Profile picture holder"
-    )
+        elevation = 4.dp
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.profilepic),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(60.dp),
+            contentDescription = "Profile picture holder"
+        )
+    }
 }
 
 @Composable
@@ -140,7 +141,7 @@ fun ProfileContentComposable() {
         verticalArrangement = Arrangement.aligned(Alignment.CenterVertically)
     ) {
         Text(
-            text="Catalin Ghita",
+            text="Amin Tahseen",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             fontSize = 25.sp
@@ -159,7 +160,7 @@ fun ProfileOption(text: String, painterResource: Painter,action:()-> Unit){
         .height(intrinsicSize = IntrinsicSize.Max)
         .fillMaxWidth()
         .background(appBgColor)
-        .padding(10.dp)
+        .padding(20.dp)
         .clickable {
             action()
         }
