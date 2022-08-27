@@ -1,31 +1,39 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.screens
 
+import android.content.Context
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.ProgressBar
+import com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels.BackupViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
+import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
 
 @Composable
-fun BackupScreen(){
-    var progress by remember { mutableStateOf(0) }
+fun BackupScreen(
+    backupViewModel:BackupViewModel = hiltViewModel()
+){
+    val context= LocalContext.current
     val animatedProgress= animateIntAsState(
-        targetValue = progress,
+        targetValue =backupViewModel.progress.value,
         animationSpec = tween(
         durationMillis = 5000,
         easing = FastOutSlowInEasing
@@ -67,20 +75,55 @@ fun BackupScreen(){
                 ProgressBar(value = animatedProgress)
             }
             Spacer(modifier = Modifier.height(30.dp))
-            when(animatedProgress.value){
-                100->
-                    Text(text = "Backup Successful", color = textColor)
-                else->
-                    Text(text = "${animatedProgress.value}/100 Records Remaining", color = textColor)
-
-            }
+            Text(text = backupViewModel.message.value, color = textColor)
         }
-        Button(
-            onClick ={ progress+=100 },
-            modifier = Modifier
+        when(backupViewModel.buttonState.value){
+            true->
+                CreateBackupButton(
+                    context,
+                    backupViewModel
+                )
+            else->
+                Button(
+                    enabled = false,
+                    onClick ={
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        disabledBackgroundColor = textFieldColor,
+                        disabledContentColor = textColor
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)) {
+                    Text(text = "Working...".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
+                }
+        }
+
+    }
+}
+@Composable
+fun CreateBackupButton(context: Context, backupViewModel: BackupViewModel
+) {
+    Button(
+        onClick ={
+            backupViewModel.backupData(context = context)
+//            when (PackageManager.PERMISSION_GRANTED) {
+//                ContextCompat.checkSelfPermission(
+//                    context,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                ) -> {
+//                    // Some works that require permission
+//
+//                }
+//                else -> {
+//                    // Asking for permission
+//                    permissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                }
+//            }
+        },
+        modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)) {
-            Text(text = "Create Backup".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
-        }
+        Text(text = "Create Backup".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
     }
 }

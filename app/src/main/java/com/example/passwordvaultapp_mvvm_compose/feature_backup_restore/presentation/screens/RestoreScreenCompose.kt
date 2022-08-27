@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,16 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.ProgressBar
+import com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels.RestoreViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 
 @Composable
-fun RestoreScreen(){
-    var progress by remember { mutableStateOf(0) }
+fun RestoreScreen(
+    restoreViewModel: RestoreViewModel = viewModel()
+){
     val animatedProgress= animateIntAsState(
-        targetValue = progress,
+        targetValue = restoreViewModel.progress.value,
         animationSpec = tween(
             durationMillis = 5000,
             easing = FastOutSlowInEasing
@@ -77,7 +80,7 @@ fun RestoreScreen(){
         }
         Button(
             onClick ={
-                progress+=100
+                restoreViewModel.restoreData()
                      },
             modifier = Modifier
             .fillMaxWidth()

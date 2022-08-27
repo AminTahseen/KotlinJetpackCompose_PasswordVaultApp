@@ -7,7 +7,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.passwordvaultapp_mvvm_compose.acitivites.ui.theme.PasswordVaultApp_MVVM_ComposeTheme
 import com.example.passwordvaultapp_mvvm_compose.common.navigation.SettingsNavigation
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
