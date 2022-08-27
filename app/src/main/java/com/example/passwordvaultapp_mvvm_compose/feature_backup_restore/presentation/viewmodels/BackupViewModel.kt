@@ -1,6 +1,7 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels
 
 import android.content.Context
+import android.os.Environment
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,7 @@ import java.io.File
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
+
 
 @HiltViewModel
 class BackupViewModel @Inject constructor(
@@ -87,24 +89,27 @@ class BackupViewModel @Inject constructor(
           }
      }
      private fun backupCategoriesToCSV(context:Context,list:List<VaultCategory>){
-          val fileName = context.filesDir.path.toString()+"/categories.csv"
-          var file = File(fileName)
+          var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+          // select the name for your file
+          root = File(root, "categories.csv")
+
           // create a new file
-          val isNewFileCreated :Boolean = file.createNewFile()
+          val isNewFileCreated :Boolean = root.createNewFile()
           if(isNewFileCreated){
-               println("$fileName is created successfully.")
+               println("${root.path} is created successfully.")
                val row1 = listOf("Category ID", "Category Name", "Category Type","Visible")
-               csvWriter().open(fileName) {
+               csvWriter().open(root.path) {
                     writeRow(row1)
                     list.forEach {
                          writeRow(it.id,it.categoryName,it.categoryType,it.isVisible)
                     }
                }
           } else{
-               println("${file.path}")
-               println("$fileName already exists.")
+               println("${root.path}")
+               println("${root.path} already exists.")
                val row1 = listOf("Category ID", "Category Name", "Category Type","Visible")
-               csvWriter().open(fileName) {
+               csvWriter().open(root.path) {
                     writeRow(row1)
                     list.forEach {
                          writeRow(it.id,it.categoryName,it.categoryType,it.isVisible)
@@ -113,24 +118,32 @@ class BackupViewModel @Inject constructor(
           }
      }
      private fun backupVaultsToCSV(context:Context,list:List<VaultPassword>){
-          val fileName = context.filesDir.path.toString()+"/vaults.csv"
-          var file = File(fileName)
+       //   val fileName = context.filesDir.path.toString()+"/vaults.csv"
+         // var file = File(fileName)
+          var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+          //if you want to create a sub-dir
+//          root = File(root, "SecureVault-Backup")
+//          root.mkdir()
+
+          // select the name for your file
+          root = File(root, "vaults.csv")
           // create a new file
-          val isNewFileCreated :Boolean = file.createNewFile()
+          val isNewFileCreated :Boolean =root.createNewFile()
           if(isNewFileCreated){
-               println("$fileName is created successfully.")
+               println("${root.path} is created successfully.")
                val row1 = listOf("Vault ID","Category ID","Category Name", "Vault Name","Vault Password","Vault Logo")
-               csvWriter().open(fileName) {
+               csvWriter().open(root.path) {
                     writeRow(row1)
                     list.forEach {
                          writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,it.vaultLogoURL)
                     }
                }
           } else{
-               println("${file.path}")
-               println("$fileName already exists.")
+               println("${root.path}")
+               println("${root.path} already exists.")
                val row1 = listOf("Vault ID","Category ID","Category Name", "Vault Name","Vault Password","Vault Logo")
-               csvWriter().open(fileName) {
+               csvWriter().open(root.path) {
                     writeRow(row1)
                     list.forEach {
                          writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,it.vaultLogoURL)

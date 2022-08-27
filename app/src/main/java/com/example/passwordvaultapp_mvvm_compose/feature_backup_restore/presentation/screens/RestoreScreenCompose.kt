@@ -1,5 +1,8 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.screens
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
@@ -8,25 +11,31 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.ProgressBar
+import com.example.passwordvaultapp_mvvm_compose.common.components.RestoreDialog
+import com.example.passwordvaultapp_mvvm_compose.common.utils.FileUtils
 import com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels.RestoreViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 
+
 @Composable
 fun RestoreScreen(
-    restoreViewModel: RestoreViewModel = viewModel()
+    restoreViewModel: RestoreViewModel = hiltViewModel()
 ){
+    var dialogState by remember { mutableStateOf(false) }
+
     val animatedProgress= animateIntAsState(
         targetValue = restoreViewModel.progress.value,
         animationSpec = tween(
@@ -34,6 +43,34 @@ fun RestoreScreen(
             easing = FastOutSlowInEasing
         )
     )
+
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetMultipleContents()
+    ) {
+        // uri result
+        it.forEach {uri->
+            val fileUtils=FileUtils()
+            val fullFilePath: String? =fileUtils.getPathFromUri(context = context, uri = uri!!)
+            Log.d("filePath",fullFilePath!!)
+            if(fullFilePath!!.contains("categories"))
+                restoreViewModel.restoreData(fullFilePath!!)
+            else
+                restoreViewModel.restoreVaultData(fullFilePath!!)
+        }
+
+    }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission Accepted: Do something
+            launcher.launch("*/*")
+        } else {
+            // Permission Denied: Do something
+        }
+    }
+
     Column(
         verticalArrangement = Arrangement.Center, modifier = Modifier
             .background(appBgColor)
@@ -70,22 +107,31 @@ fun RestoreScreen(
                 ProgressBar(value = animatedProgress)
             }
             Spacer(modifier = Modifier.height(30.dp))
-            when(animatedProgress.value){
-                100->
-                    Text(text = "Restore Successful", color = textColor)
-                else->
-                    Text(text = "${animatedProgress.value}/100 Records Remaining", color = textColor)
-
-            }
+            Text(text = "${restoreViewModel.message.value}", color = textColor)
         }
         Button(
             onClick ={
-                restoreViewModel.restoreData()
+                dialogState=true
                      },
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)) {
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)) {
             Text(text = "Restore Data".uppercase(), color = Color.White, modifier = Modifier.padding(10.dp))
         }
+        RestoreDialog(
+            dialogState=dialogState,
+            dialogTitle="Restore",
+            dialogSubtitle = "Please select a csv file to restore",
+            option1Text="Select File",
+            onDismissRequest={ dialogState=!it },
+            option1Action={
+                restoreViewModel.selectFileFromStorage(
+                    launcher =   launcher,
+                    permissionLauncher =  permissionLauncher,
+                    context =  context,
+                    fileType = "*/*"
+                    )
+            }
+        )
     }
 }

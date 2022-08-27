@@ -18,4 +18,7 @@ interface VaultPasswordDao {
 
     @Delete
     fun deleteVault(vaultPassword:VaultPassword)
+
+    @Query("DELETE FROM VaultPassword")
+    fun clearTable()
 }
