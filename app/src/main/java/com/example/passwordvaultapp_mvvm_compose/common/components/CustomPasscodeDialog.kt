@@ -6,17 +6,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.Purple500
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
@@ -227,7 +227,11 @@ fun PassCodeKeyboard(
                 .fillMaxWidth()
                 .weight(1f)) {
                 passCodeButton("X", forDelete = true){
-                    passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                    when(passCodeViewModel.passCodeValue.isNotEmpty()){
+                        true->{
+                            passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                        }
+                    }
                 }
             }
         }
@@ -241,7 +245,7 @@ fun passCodeButton(number:String,forDelete:Boolean?=false,onClick:()->Unit){
         ) {
             if (forDelete == true) {
                 Icon(
-                    imageVector = Icons.Outlined.Delete,
+                    painter = painterResource(id = R.drawable.backspace),
                     contentDescription = "Icon",
                     modifier = Modifier.padding(10.dp),
 

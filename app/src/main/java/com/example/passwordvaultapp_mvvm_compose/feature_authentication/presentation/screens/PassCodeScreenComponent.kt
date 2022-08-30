@@ -15,11 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.acitivites.LoggedInActivity
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
@@ -165,7 +167,11 @@ fun passCodeKeyboard(
             }
             Column(modifier =  Modifier.fillMaxWidth().weight(1f)) {
                 passCodeButton("X", forDelete = true){
-                    passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                    when(passCodeViewModel.passCodeValue.isNotEmpty()){
+                        true->{
+                            passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                        }
+                    }
                 }
             }
             Column(modifier =  Modifier.fillMaxWidth().weight(1f).padding(end = 30.dp)) {
@@ -228,7 +234,7 @@ fun passCodeButton(number:String,forDelete:Boolean?=false,onClick:()->Unit){
         ) {
             if (forDelete == true) {
                 Icon(
-                    imageVector = Icons.Outlined.Delete,
+                    painter = painterResource(id = R.drawable.backspace),
                     contentDescription = "Icon",
                     modifier = Modifier.padding(10.dp),
 
