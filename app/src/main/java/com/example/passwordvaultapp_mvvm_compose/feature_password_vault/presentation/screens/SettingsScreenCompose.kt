@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.passwordvaultapp_mvvm_compose.R
-import com.example.passwordvaultapp_mvvm_compose.acitivites.SettingsActivity
+import com.example.passwordvaultapp_mvvm_compose.activities.SettingsActivity
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor

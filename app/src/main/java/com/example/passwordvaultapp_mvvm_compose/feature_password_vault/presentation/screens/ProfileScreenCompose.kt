@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.passwordvaultapp_mvvm_compose.R
-import com.example.passwordvaultapp_mvvm_compose.acitivites.MainActivity
+import com.example.passwordvaultapp_mvvm_compose.activities.MainActivity
 import com.example.passwordvaultapp_mvvm_compose.common.components.YesNoDialog
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.viewmodels.ProfileScreenViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
@@ -54,11 +54,7 @@ fun ProfileScreen(
             Divider(color = textColor, thickness = 1.dp, modifier =Modifier
                 .padding(start = 20.dp, end = 20.dp))
             Spacer(modifier = Modifier.height(10.dp))
-            ProfileOption("My Profile",painterResource(id = R.drawable.profile), action = {
 
-            })
-            ProfileOption("Change Pin", painterResource(id = R.drawable.lock), action = {
-            })
             ProfileOption("Clear Data", painterResource(id = R.drawable.delete), action = {
                 dialogStateClear=true
             })
@@ -141,7 +137,7 @@ fun ProfileContentComposable() {
         verticalArrangement = Arrangement.aligned(Alignment.CenterVertically)
     ) {
         Text(
-            text="Amin Tahseen",
+            text="John Doe",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             fontSize = 25.sp

@@ -3,6 +3,7 @@ package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.present
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -59,6 +60,7 @@ fun AddPasswordVaultScreen(
 
 
     var imageURI by remember { mutableStateOf<Uri?>(null) }
+    var imageBitmap: Bitmap? =null
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -98,7 +100,7 @@ fun AddPasswordVaultScreen(
     if(dataValue!=null){
         vaultName=TextFieldValue(dataValue.vaultName)
         vaultPass=TextFieldValue(dataValue.vaultPassword)
-        imageURI=Uri.parse(dataValue.vaultLogoURL)
+        imageBitmap=dataValue.vaultLogoURL
         selectedCategoryID=dataValue.vaultCategoryId.toString()
         selectedCategoryName=dataValue.vaultCategory
         Log.d("selectedIndex",vaultViewModel.getSelectedCategoryIndex(dataValue.vaultCategoryId).toString())
@@ -225,7 +227,7 @@ fun AddPasswordVaultScreen(
                 fontSize = 20.sp,
             )
             VaultCategoryList(selectedIndex, onCategorySelected = ::onCategorySelected)
-            VaultImagePicker(launcher, permissionLauncher, context, imageURI)
+            VaultImagePicker(launcher, permissionLauncher, context, imageURI,imageBitmap)
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
@@ -237,20 +239,38 @@ fun AddPasswordVaultScreen(
                                     vaultPassword =vaultPass.text,
                                     vaultCategory = selectedCategoryName,
                                     vaultCategoryId = selectedCategoryID.toInt(),
-                                    vaultLogoURL = imageURI.toString()
+                                    vaultLogoURL = vaultViewModel.uriToBitmap(imageURI!!,context)
                                 )
                             )
-                        else->
-                            vaultViewModel.addNewVault(
-                                VaultPassword(
-                                    id=dataValue.id,
-                                    vaultName = vaultName.text,
-                                    vaultPassword =vaultPass.text,
-                                    vaultCategory = selectedCategoryName,
-                                    vaultCategoryId = selectedCategoryID.toInt(),
-                                    vaultLogoURL = imageURI.toString()
+                        else->{
+                            if(imageURI!=null) {
+                                vaultViewModel.addNewVault(
+                                    VaultPassword(
+                                        id = dataValue.id,
+                                        vaultName = vaultName.text,
+                                        vaultPassword = vaultPass.text,
+                                        vaultCategory = selectedCategoryName,
+                                        vaultCategoryId = selectedCategoryID.toInt(),
+                                        vaultLogoURL = vaultViewModel.uriToBitmap(
+                                            imageURI!!,
+                                            context
+                                        )
+                                    )
                                 )
-                            )
+                            }else{
+                                vaultViewModel.addNewVault(
+                                    VaultPassword(
+                                        id = dataValue.id,
+                                        vaultName = vaultName.text,
+                                        vaultPassword = vaultPass.text,
+                                        vaultCategory = selectedCategoryName,
+                                        vaultCategoryId = selectedCategoryID.toInt(),
+                                        vaultLogoURL = imageBitmap
+                                    )
+                                )
+                            }
+                        }
+
 
                     }
 
@@ -286,7 +306,8 @@ fun VaultImagePicker(
     launcher: ManagedActivityResultLauncher<String, Uri>,
     permissionLauncher: ManagedActivityResultLauncher<String, Boolean>,
     context: Context,
-    imageURI: Uri?
+    imageURI: Uri?,
+    imageBitmap: Bitmap?
 ) {
     Text(
         text = "Vault For Image",
@@ -317,19 +338,36 @@ fun VaultImagePicker(
         colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
 
     ) {
-        when {
-            imageURI != null ->
-                Text(
-                    text = "Change Logo".uppercase(),
-                    color = Color.White,
-                    modifier = Modifier.padding(10.dp)
-                )
-            else ->
-                Text(
-                    text = "Choose Logo".uppercase(),
-                    color = Color.White,
-                    modifier = Modifier.padding(10.dp)
-                )
-        }
+      if(imageBitmap!=null){
+          when {
+              imageBitmap != null->
+                  Text(
+                      text = "Change Logo".uppercase(),
+                      color = Color.White,
+                      modifier = Modifier.padding(10.dp)
+                  )
+              else ->
+                  Text(
+                      text = "Choose Logo".uppercase(),
+                      color = Color.White,
+                      modifier = Modifier.padding(10.dp)
+                  )
+          }
+      }else{
+          when {
+              imageURI != null->
+                  Text(
+                      text = "Change Logo".uppercase(),
+                      color = Color.White,
+                      modifier = Modifier.padding(10.dp)
+                  )
+              else ->
+                  Text(
+                      text = "Choose Logo".uppercase(),
+                      color = Color.White,
+                      modifier = Modifier.padding(10.dp)
+                  )
+          }
+      }
     }
 }

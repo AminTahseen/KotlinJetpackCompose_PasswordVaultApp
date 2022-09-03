@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.passwordvaultapp_mvvm_compose.acitivites.VaultActivity
-import com.example.passwordvaultapp_mvvm_compose.acitivites.VaultCategoryActivity
+import com.example.passwordvaultapp_mvvm_compose.activities.VaultActivity
+import com.example.passwordvaultapp_mvvm_compose.activities.VaultCategoryActivity
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor

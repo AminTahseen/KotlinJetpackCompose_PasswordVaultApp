@@ -1,7 +1,10 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +19,7 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class RestoreViewModel @Inject constructor(
@@ -41,11 +45,6 @@ class RestoreViewModel @Inject constructor(
 
     fun restoreData(fileName:String) {
         progress.value+=100
-        //Log.d("FilePath",uri.))
-//        val path =uri.path
-//        val file = File(URI(path))
-//        Log.d("FilePath",file.path)
-//        Log.d("FilePath",file.absolutePath)
         csvReader().open(fileName = fileName) {
             readAllAsSequence().forEach { row: List<String> ->
                 //Do something
@@ -73,8 +72,9 @@ class RestoreViewModel @Inject constructor(
                     && row[4]!="Vault Password" && row[5]!="Vault Logo"
                 ){
                     // insert to db
-                    Log.d("row Vault","${row[0]} ${row[2]} ${row[1]} ${row[3]} ${row[4]} ${row[5]}")
-                    insertVaultDataToDB(row[0].toInt(),row[2],row[1].toInt(),row[3],row[4],row[5])
+
+                    Log.d("row Vault","${row[0]} ${row[2]} ${row[1]} ${row[3]} ${row[4]} ${decodeBase64(row[5])}")
+                    insertVaultDataToDB(row[0].toInt(),row[2],row[1].toInt(),row[3],row[4],decodeBase64(row[5]))
                 }
             }
         }
@@ -92,7 +92,7 @@ class RestoreViewModel @Inject constructor(
             message.value = "Category, $name Restored Successfully"
         }
     }
-    private fun insertVaultDataToDB(id:Int, categoryName:String, categoryId:Int,name:String,vaultPassword:String, logoURL:String){
+    private fun insertVaultDataToDB(id:Int, categoryName:String, categoryId:Int,name:String,vaultPassword:String, logoURL: Bitmap?){
         val vault= VaultPassword(
             id=id,
             vaultName = name,
@@ -106,4 +106,13 @@ class RestoreViewModel @Inject constructor(
             message.value = "Vault, $name Restored Successfully"
         }
     }
+    fun decodeBase64(input: String?): Bitmap? {
+        val decodedByte = Base64.decode(input, 0)
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size)
+    }
+
+
+
+
+
 }

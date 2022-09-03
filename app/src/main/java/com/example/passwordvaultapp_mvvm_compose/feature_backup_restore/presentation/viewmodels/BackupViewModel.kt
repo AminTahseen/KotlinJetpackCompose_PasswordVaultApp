@@ -1,7 +1,10 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_backup_restore.presentation.viewmodels
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.os.Environment
+import android.util.Base64
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +17,7 @@ import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 import javax.inject.Inject
@@ -90,8 +94,6 @@ class BackupViewModel @Inject constructor(
      }
      private fun backupCategoriesToCSV(context:Context,list:List<VaultCategory>){
           var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-          // select the name for your file
           root = File(root, "categories.csv")
 
           // create a new file
@@ -118,25 +120,21 @@ class BackupViewModel @Inject constructor(
           }
      }
      private fun backupVaultsToCSV(context:Context,list:List<VaultPassword>){
-       //   val fileName = context.filesDir.path.toString()+"/vaults.csv"
-         // var file = File(fileName)
           var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-          //if you want to create a sub-dir
-//          root = File(root, "SecureVault-Backup")
-//          root.mkdir()
-
-          // select the name for your file
           root = File(root, "vaults.csv")
           // create a new file
           val isNewFileCreated :Boolean =root.createNewFile()
-          if(isNewFileCreated){
+          if(isNewFileCreated)
+          {
                println("${root.path} is created successfully.")
                val row1 = listOf("Vault ID","Category ID","Category Name", "Vault Name","Vault Password","Vault Logo")
-               csvWriter().open(root.path) {
+               csvWriter().open(root.path)
+               {
                     writeRow(row1)
                     list.forEach {
-                         writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,it.vaultLogoURL)
+                         val base64=getEncoded64ImageStringFromBitmap(it.vaultLogoURL!!)
+                         Log.d("base64 Encode",base64.toString())
+                         writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,base64)
                     }
                }
           } else{
@@ -146,9 +144,22 @@ class BackupViewModel @Inject constructor(
                csvWriter().open(root.path) {
                     writeRow(row1)
                     list.forEach {
-                         writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,it.vaultLogoURL)
+                         val base64=getEncoded64ImageStringFromBitmap(it.vaultLogoURL!!)
+                         Log.d("base64 Encode",base64.toString())
+                         writeRow(it.id,it.vaultCategoryId,it.vaultCategory,it.vaultName,it.vaultPassword,base64)
                     }
                }
           }
      }
+
+     private fun getEncoded64ImageStringFromBitmap(bitmap: Bitmap): String? {
+          val stream = ByteArrayOutputStream()
+          bitmap.compress(CompressFormat.JPEG, 70, stream)
+          val byteFormat = stream.toByteArray()
+
+          // Get the Base64 string
+          return Base64.encodeToString(byteFormat, Base64.NO_WRAP)
+     }
+
+
 }

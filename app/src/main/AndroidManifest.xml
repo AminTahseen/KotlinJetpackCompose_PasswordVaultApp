@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.passwordvaultapp_mvvm_compose">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission"/>
+
     <application
         android:requestLegacyExternalStorage="true"
         android:name=".PasswordVaultApp"
@@ -15,32 +18,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">
         <activity
-            android:name=".acitivites.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".acitivites.VaultDetailsActivity"
+            android:name=".activities.VaultDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_vault_details"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".acitivites.VaultActivity"
+            android:name=".activities.VaultActivity"
             android:exported="false"
             android:label="@string/title_activity_vault"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".acitivites.VaultCategoryActivity"
+            android:name=".activities.VaultCategoryActivity"
             android:exported="false"
             android:label="@string/title_activity_vault_category"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".acitivites.LoggedInActivity"
+            android:name=".activities.LoggedInActivity"
             android:exported="false"
             android:label="@string/title_activity_logged_in"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose" />
         <activity
-            android:name=".acitivites.MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PasswordVaultApp_MVVM_Compose">

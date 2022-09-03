@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose.acitivites
+package com.example.passwordvaultapp_mvvm_compose.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
