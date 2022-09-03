@@ -11,6 +11,7 @@ import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.data.r
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.repository.VaultCategoryRepository
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.AddVaultCategoryUseCase
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.CategoryUseCases
+import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.ClearVaultCategoryTableUseCase
 import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain.use_cases.GetVaultCategoriesUseCase
 import dagger.Module
 import dagger.Provides
@@ -51,7 +52,8 @@ object AppModule {
     fun provideVaultCategoriesUseCases(repository: VaultCategoryRepository):CategoryUseCases{
         return CategoryUseCases(
             getCategories = GetVaultCategoriesUseCase(repository = repository),
-            addCategory = AddVaultCategoryUseCase(repository=repository)
+            addCategory = AddVaultCategoryUseCase(repository=repository),
+            clearVaultCategoryTableUseCase = ClearVaultCategoryTableUseCase(repository = repository)
         )
     }
 
@@ -62,7 +64,8 @@ object AppModule {
             addVaultUseCase = AddVaultUseCase(repository),
             getVaultsUseCase = GetVaultsUseCase(repository),
             getVaultByIdUseCase = GetVaultByIdUseCase(repository),
-            deleteVaultUseCase = DeleteVaultUseCase(repository)
+            deleteVaultUseCase = DeleteVaultUseCase(repository),
+            clearVaultTableUseCase = ClearVaultTableUseCase(repository)
         )
     }
 }

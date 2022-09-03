@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.screens
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -8,28 +9,29 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.passwordvaultapp_mvvm_compose.acitivites.LoggedInActivity
+import com.example.passwordvaultapp_mvvm_compose.R
+import com.example.passwordvaultapp_mvvm_compose.activities.LoggedInActivity
 import com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.viewmodels.PassCodeViewModel
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.greenTextColor
-import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textFieldColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun PassCodeScreen(navController: NavController,passCodeViewModel: PassCodeViewModel){
+fun PassCodeScreen(passCodeViewModel: PassCodeViewModel){
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val maxLength=5
@@ -165,7 +167,11 @@ fun passCodeKeyboard(
             }
             Column(modifier =  Modifier.fillMaxWidth().weight(1f)) {
                 passCodeButton("X", forDelete = true){
-                    passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                    when(passCodeViewModel.passCodeValue.isNotEmpty()){
+                        true->{
+                            passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
+                        }
+                    }
                 }
             }
             Column(modifier =  Modifier.fillMaxWidth().weight(1f).padding(end = 30.dp)) {
@@ -173,6 +179,7 @@ fun passCodeKeyboard(
                     if (passCodeViewModel.passCodeValue.length == maxLength) {
                         when{
                             passCodeViewModel.verifyPassCode()->{
+                                (context as Activity).finish()
                                 val loggedInIntent=Intent(context, LoggedInActivity::class.java)
                                 context.startActivity(loggedInIntent)
                             }
@@ -227,7 +234,7 @@ fun passCodeButton(number:String,forDelete:Boolean?=false,onClick:()->Unit){
         ) {
             if (forDelete == true) {
                 Icon(
-                    imageVector = Icons.Outlined.Delete,
+                    painter = painterResource(id = R.drawable.backspace),
                     contentDescription = "Icon",
                     modifier = Modifier.padding(10.dp),
 

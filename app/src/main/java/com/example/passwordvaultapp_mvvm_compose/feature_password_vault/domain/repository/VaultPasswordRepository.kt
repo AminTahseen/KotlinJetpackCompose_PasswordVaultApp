@@ -12,4 +12,6 @@ interface VaultPasswordRepository {
     fun getVaultById(id:Int):Flow<VaultPassword>
 
     suspend fun deleteVaultPassword(vaultPassword: VaultPassword)
+
+    suspend fun clearTable()
 }

@@ -1,17 +1,10 @@
-package com.example.passwordvaultapp_mvvm_compose.acitivites
+package com.example.passwordvaultapp_mvvm_compose.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.passwordvaultapp_mvvm_compose.acitivites.ui.theme.PasswordVaultApp_MVVM_ComposeTheme
+import com.example.passwordvaultapp_mvvm_compose.activities.ui.theme.PasswordVaultApp_MVVM_ComposeTheme
 import com.example.passwordvaultapp_mvvm_compose.common.navigation.VaultNavigation
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import dagger.hilt.android.AndroidEntryPoint

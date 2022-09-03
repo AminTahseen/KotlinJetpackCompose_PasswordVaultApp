@@ -22,4 +22,8 @@ class VaultPasswordRepositoryImpl(private val vaultPasswordDao: VaultPasswordDao
         vaultPasswordDao.deleteVault(vaultPassword)
     }
 
+    override suspend fun clearTable() {
+        vaultPasswordDao.clearTable()
+    }
+
 }

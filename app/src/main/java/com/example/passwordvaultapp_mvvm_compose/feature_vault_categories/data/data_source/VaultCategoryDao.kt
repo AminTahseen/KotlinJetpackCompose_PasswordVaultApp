@@ -16,4 +16,6 @@ interface VaultCategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNewVaultCategory(vaultCategory: VaultCategory)
 
+    @Query("DELETE FROM VaultCategory")
+    fun clearTable()
 }

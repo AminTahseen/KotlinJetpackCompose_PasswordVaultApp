@@ -14,10 +14,10 @@ import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presenta
 fun BottomNavigation(navController:NavHostController){
     NavHost(navController = navController, startDestination = Screen.PasswordListScreen.route){
         composable(route = Screen.PasswordListScreen.route){
-            PasswordListScreen(navController = navController)
+            PasswordListScreen()
         }
         composable(route = Screen.ProfileScreen.route){
-            ProfileScreen(navController = navController)
+            ProfileScreen()
         }
         composable(route = Screen.SettingsScreen.route){
             SettingsScreen(navController = navController)

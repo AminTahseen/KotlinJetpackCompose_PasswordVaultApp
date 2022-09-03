@@ -2,5 +2,6 @@ package com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domai
 
 data class CategoryUseCases(
     val getCategories:GetVaultCategoriesUseCase,
-    val addCategory:AddVaultCategoryUseCase
+    val addCategory:AddVaultCategoryUseCase,
+    val clearVaultCategoryTableUseCase: ClearVaultCategoryTableUseCase
 )

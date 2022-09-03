@@ -13,4 +13,10 @@ class VaultCategoryRepositoryImpl(private val vaultCategoryDao: VaultCategoryDao
     override suspend fun addNewVaultCategory(vaultCategory: VaultCategory) {
         vaultCategoryDao.addNewVaultCategory(vaultCategory)
     }
+
+    override suspend fun clearCategoryTable() {
+        vaultCategoryDao.clearTable()
+    }
+
+
 }

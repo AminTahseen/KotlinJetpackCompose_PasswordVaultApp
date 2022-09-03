@@ -8,4 +8,6 @@ interface VaultCategoryRepository {
     fun getAllVaultCategories(): Flow<List<VaultCategory>>
 
     suspend fun addNewVaultCategory(vaultCategory: VaultCategory)
+
+    suspend fun clearCategoryTable()
 }

@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose.acitivites.ui.theme
+package com.example.passwordvaultapp_mvvm_compose.activities.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

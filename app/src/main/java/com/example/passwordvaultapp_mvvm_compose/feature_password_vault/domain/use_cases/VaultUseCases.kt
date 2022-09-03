@@ -4,5 +4,6 @@ data class VaultUseCases(
     val addVaultUseCase: AddVaultUseCase,
     val getVaultsUseCase: GetVaultsUseCase,
     val getVaultByIdUseCase: GetVaultByIdUseCase,
-    val deleteVaultUseCase: DeleteVaultUseCase
+    val deleteVaultUseCase: DeleteVaultUseCase,
+    val clearVaultTableUseCase: ClearVaultTableUseCase
 )

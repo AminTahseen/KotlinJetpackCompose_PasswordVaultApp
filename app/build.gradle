@@ -93,6 +93,8 @@ dependencies {
     //Password generator dependency
     implementation 'com.github.abhinav0612:PasswordGeneratorLibrary:1.0'
 
+    //CSV Writer
+    implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:1.6.0' //for JVM platform
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

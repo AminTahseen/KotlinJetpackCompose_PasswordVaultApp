@@ -1,7 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
 
 import android.app.Activity
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import com.example.passwordvaultapp_mvvm_compose.R
 import com.example.passwordvaultapp_mvvm_compose.common.components.PassCodeDialog
 import com.example.passwordvaultapp_mvvm_compose.common.components.YesNoDialog
@@ -57,6 +56,7 @@ fun ViewVaultDetailsScreen(
     var dialogState by remember {mutableStateOf(false)}
     var deleteDialogState by remember {mutableStateOf(false)}
     val activity = (LocalContext.current as? Activity)
+    val context= LocalContext.current
 
     fun onShowPassword(
         status:Boolean
@@ -98,16 +98,24 @@ fun ViewVaultDetailsScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
             if (dataValue != null) {
-                var imageUri= Uri.parse(dataValue.vaultLogoURL)
-                var imageUriFormed=vaultViewModel.getVaultImageFromLocal(imageUri)
-                Image(
-                    rememberAsyncImagePainter(imageUriFormed),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .padding(10.dp),
-                    contentScale = ContentScale.Fit,
-                )
+                if (dataValue.vaultLogoURL==null)
+                    Image(
+                        painter = painterResource(id = R.drawable.lock),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(10.dp),
+                        contentScale = ContentScale.Fit,
+                    )
+                else
+                    Image(
+                       bitmap = dataValue.vaultLogoURL.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(10.dp),
+                        contentScale = ContentScale.Fit,
+                    )
                 Text(
                     text = dataValue.vaultName,
                     color = Color.White,
@@ -208,8 +216,15 @@ fun ViewVaultDetailsScreen(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = {
-                    navController.navigate("edit_vault_screen?"+"vaultId=${dataValue?.id}")
+                Button(onClick =
+                {
+                    when{
+                        showHidePass->
+                            navController.navigate("edit_vault_screen?" + "vaultId=${dataValue?.id}")
+                        else->
+                            dialogState=true
+                    }
+
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {
@@ -219,8 +234,14 @@ fun ViewVaultDetailsScreen(
                         tint = Color.White
                     )
                 }
-                Button(onClick = {
-                    deleteDialogState=true
+                Button(onClick =
+                {
+                    when{
+                        showHidePass->
+                            deleteDialogState=true
+                    else->
+                        dialogState=true
+                    }
                 },
                     colors = ButtonDefaults.buttonColors(backgroundColor = appBgColor)
                 ) {

@@ -1,5 +1,6 @@
 package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.domain.models
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,7 +10,7 @@ data class VaultPassword(
     val vaultPassword:String,
     val vaultCategoryId:Int,
     val vaultCategory:String,
-    val vaultLogoURL:String,
+    val vaultLogoURL:Bitmap?,
     @PrimaryKey val id:Int?=null
 )
 fun VaultPassword.toPasswordData():PasswordData{

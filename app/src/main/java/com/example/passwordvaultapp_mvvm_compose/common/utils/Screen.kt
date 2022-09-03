@@ -21,5 +21,8 @@ sealed class Screen(val route:String){
     object VaultDetailsScreen:Screen("vault_details_screen/{id}")
     object EditVaultScreen:Screen("edit_vault_screen?vaultId={vaultId}")
 
+    // Settings navigation
+    object BackupScreen:Screen("backup_screen")
+    object RestoreScreen:Screen("restore_screen")
 
 }

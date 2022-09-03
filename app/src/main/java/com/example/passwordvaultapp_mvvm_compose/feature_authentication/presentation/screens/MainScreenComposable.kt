@@ -1,4 +1,4 @@
-package com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens
+package com.example.passwordvaultapp_mvvm_compose.feature_authentication.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,19 +7,17 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
+import com.example.passwordvaultapp_mvvm_compose.ui.theme.appBgColor
 import com.example.passwordvaultapp_mvvm_compose.ui.theme.textColor
 
 
@@ -29,7 +27,9 @@ fun MainScreen(navController: NavController){
         verticalArrangement = Arrangement.Center, modifier = Modifier
         .background(appBgColor)
         .fillMaxWidth()
-        .fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally) {
+        .fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally)
+    {
         Column( modifier = Modifier.fillMaxWidth().weight(1f)
         , horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -48,8 +48,8 @@ fun MainScreen(navController: NavController){
                 color = Color.White
             )
             Text(text = "Visually Takes Care of your sensitive" +
-                    "\n data using smart encryption." +
-                    "\n Its the most powerful encryption ever",
+                    "\n  data using smart encryption. Its the" +
+                    "\n  most powerful encryption ever",
                 fontSize = 18.sp,
                 color = textColor,
                 modifier = Modifier.fillMaxWidth(),
