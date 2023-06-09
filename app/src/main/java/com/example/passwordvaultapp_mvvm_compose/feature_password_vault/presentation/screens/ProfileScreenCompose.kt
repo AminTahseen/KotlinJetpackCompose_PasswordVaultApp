@@ -44,6 +44,7 @@ fun ProfileScreen(
     Scaffold(scaffoldState = scaffoldState) {
         Column(
             modifier = Modifier
+                .padding(it)
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(appBgColor)

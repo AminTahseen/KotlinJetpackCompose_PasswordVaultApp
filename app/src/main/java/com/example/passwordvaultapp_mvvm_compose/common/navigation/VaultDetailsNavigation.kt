@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.example.passwordvaultapp_mvvm_compose.common.utils.Screen
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.AddPasswordVaultScreen
 import com.example.passwordvaultapp_mvvm_compose.feature_password_vault.presentation.screens.ViewVaultDetailsScreen

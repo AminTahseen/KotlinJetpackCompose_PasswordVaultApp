@@ -29,7 +29,7 @@ class RestoreViewModel @Inject constructor(
      val progress by lazy { mutableStateOf(0) }
      val message by lazy { mutableStateOf("0/0 Records Remaining") }
      fun selectFileFromStorage(
-         launcher: ManagedActivityResultLauncher<String, MutableList<Uri>>,
+         launcher: ManagedActivityResultLauncher<String, List<@JvmSuppressWildcards Uri>>,
          permissionLauncher: ManagedActivityResultLauncher<String, Boolean>,
          context: Context,
          fileType:String

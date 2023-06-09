@@ -171,6 +171,7 @@ fun passCodeKeyboard(
                         true->{
                             passCodeViewModel.passCodeValue=passCodeViewModel.passCodeValue.substring(0, passCodeViewModel.passCodeValue.length-1)
                         }
+                        else->{}
                     }
                 }
             }

@@ -2,8 +2,8 @@ package com.example.passwordvaultapp_mvvm_compose.feature_authentication.present
 
 import android.app.Application
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.example.passwordvaultapp_mvvm_compose.common.utils.PrefManager
 class PassCodeViewModel(application: Application) : AndroidViewModel(application) {
@@ -14,8 +14,8 @@ class PassCodeViewModel(application: Application) : AndroidViewModel(application
         prefs.passCodeValue=value
     }
 
-    private fun getStoredPassCode():String{
-        return prefs?.passCodeValue
+    private fun getStoredPassCode(): String {
+        return prefs.passCodeValue
     }
     fun verifyPassCode():Boolean{
         return when {

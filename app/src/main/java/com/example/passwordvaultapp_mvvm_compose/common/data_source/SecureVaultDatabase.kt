@@ -14,6 +14,7 @@ import com.example.passwordvaultapp_mvvm_compose.feature_vault_categories.domain
          VaultPassword::class,
                ],
     version = 2,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class SecureVaultDatabase:RoomDatabase() {

@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 object FilePicker {
 
     fun filePicker(
-        launcher: ManagedActivityResultLauncher<String, MutableList<Uri>>,
+        launcher: ManagedActivityResultLauncher<String, List<@JvmSuppressWildcards Uri>>,
         permissionLauncher: ManagedActivityResultLauncher<String, Boolean>,
         context: Context,
         fileType:String
